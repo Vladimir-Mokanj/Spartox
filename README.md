@@ -8,11 +8,11 @@ Softwares that are used to create this project are:
 
 # Roadmap
 This is the current roadmap of the project:
-- [ ] FSM - for player and AI control
-   - [ ] BaseState
-   - [ ] BaseStateController
-- [ ] Player FSM - for easier player control
-   - [ ] PlayerBaseState
+- [x] FSM - for player and AI control
+   - [x] BaseState
+   - [x] BaseStateController
+- [x] Player FSM - for easier player control
+   - [x] PlayerBaseState
    - [ ] Other states that inherit from base state
    - [ ] Blueprintable version of said states
 - [ ] Player Components  
@@ -22,8 +22,3 @@ This is the current roadmap of the project:
 
 # Soon
 Will be adding images, gifs and extra roadmap stuff as the project develops.
-
-
-
-
-

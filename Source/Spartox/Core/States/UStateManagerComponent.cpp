@@ -17,6 +17,9 @@ void UUStateManagerComponent::BeginPlay()
 	Super::BeginPlay();
 
 	InitializeStates();
+
+	// ...
+
 }
 
 
@@ -25,36 +28,33 @@ void UUStateManagerComponent::TickComponent(const float DeltaTime, const ELevelT
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (bCanTickState == true)
+	if (bCanTickState)
 	{
-		CurrentState->TickState();
+		CurrentState->TickState(DeltaTime);
 	}
-
-	if (bDebugMode == true)
+	if (bDebug)
 	{
 		if (CurrentState)
-			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, this->GetOwner()->GetName() + "'s current state: " + CurrentState->StateDisplayName.GetPlainNameString());
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, this->GetOwner()->GetName() + "'s current state: " + CurrentState->StateDisplayName.GetPlainNameString());
 		if (StateHistory.Num() > 0)
 		{
 			for (int32 i = 0; i < StateHistory.Num(); i++)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Purple, this->GetOwner()->GetName() + "'s past state: " + FString::FromInt(i) + " " + StateHistory[i]->GetName());
+				GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Purple, this->GetOwner()->GetName() + "'s past state " + FString::FromInt(i) + " " + StateHistory[i]->GetName());
 			}
 		}
 	}
+	// ...
 }
 
-void UUStateManagerComponent::SwitchStateByKey(const FString StateKey)
+void UUStateManagerComponent::SwitchStateByKey(FString StateKey)
 {
-	// Find the state in the state map
+	/*Bind the state*/
 	UUStateBase* NewState = StateMap.FindRef(StateKey);
-	SwitchState(NewState);
-}
 
-void UUStateManagerComponent::SwitchState(UUStateBase* NewState)
-{
 	if (NewState->IsValidLowLevel())
 	{
+		/*If there is no current state, it means we are at init*/
 		if (!CurrentState)
 		{
 			CurrentState = NewState;
@@ -63,7 +63,7 @@ void UUStateManagerComponent::SwitchState(UUStateBase* NewState)
 		{
 			if (CurrentState->GetClass() == NewState->GetClass() && CurrentState->bCanRepeat == false)
 			{
-				if (bDebugMode == true)
+				if (bDebug)
 				{
 					GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, this->GetOwner()->GetName() + "'s state switch failed. " + CurrentState->StateDisplayName.GetPlainNameString() + " is not repeatable!", true);
 				}
@@ -74,14 +74,17 @@ void UUStateManagerComponent::SwitchState(UUStateBase* NewState)
 
 				CurrentState->ExitState();
 
-				if (StateHistory.Num() < StateHistoryLength)
+				if (StateHistoryLength != 0)
 				{
-					StateHistory.Push(CurrentState);
-				}
-				else
-				{
-					StateHistory.RemoveAt(0);
-					StateHistory.Push(CurrentState);
+					if (StateHistory.Num() < StateHistoryLength)
+					{
+						StateHistory.Push(CurrentState);
+					}
+					else
+					{
+						StateHistory.RemoveAt(0);
+						StateHistory.Push(CurrentState);
+					}
 				}
 
 				CurrentState = NewState;
@@ -96,21 +99,22 @@ void UUStateManagerComponent::SwitchState(UUStateBase* NewState)
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, this->GetOwner()->GetName() + "'s state switch failed. Invalid state");
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, this->GetOwner()->GetName() + "'s state switch failed. " + "Invalid state!");
 	}
+}
+
+
+void UUStateManagerComponent::InitStateManager()
+{
+	SwitchStateByKey(InitialState);
 }
 
 void UUStateManagerComponent::InitializeStates()
 {
-	// Create State and hold them in memory for when they are needed
+	/*Create State and hold them in memory for when needed*/
 	for (auto It = AvailableStates.CreateConstIterator(); It; ++It)
 	{
 		UUStateBase* State = NewObject<UUStateBase>(this, It->Value);
 		StateMap.Add(It->Key, State);
 	}
-}
-
-void UUStateManagerComponent::InitStateManager()
-{
-	SwitchStateByKey(InitialState);
 }

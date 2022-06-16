@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Spartox/Core/States/UStateBase.h"
+#include "Spartox/Player/APlayerBase.h"
+#include "Spartox/Player/Interfaces/IPlayerMove.h"
 #include "UPlayerBaseState.generated.h"
+
 
 UCLASS()
 class SPARTOX_API UUPlayerBaseState : public UUStateBase
@@ -13,11 +16,10 @@ class SPARTOX_API UUPlayerBaseState : public UUStateBase
 
 public:
 	UPROPERTY(BlueprintReadOnly)
-		class AAPlayerBase* PlayerRef = nullptr;
+		AAPlayerBase* PlayerRef = nullptr;
 
-	class IIPlayerMove* PlayerControllerIfc = nullptr;
-
-	virtual void EnterState(AActor* StateOwner) override;
+	IIPlayerMove* PlayerController = nullptr;
+	virtual void EnterState(AActor* OwnerRef) override;
 	virtual void ExitState() override;
 
 protected:

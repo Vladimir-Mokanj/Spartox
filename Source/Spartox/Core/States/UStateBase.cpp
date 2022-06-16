@@ -6,7 +6,7 @@ void UUStateBase::EnterState(AActor* StateOwner)
 {
 }
 
-void UUStateBase::TickState()
+void UUStateBase::TickState(const float DeltaTime)
 {
 }
 

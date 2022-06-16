@@ -5,18 +5,14 @@
 // Sets default values
 AAPlayerBase::AAPlayerBase()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
+	StateManager = CreateDefaultSubobject<UUStateManagerComponent>(TEXT("StateManager"));
 }
 
 void AAPlayerBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-}
-
-void AAPlayerBase::Tick(const float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	StateManager->InitStateManager();
 }

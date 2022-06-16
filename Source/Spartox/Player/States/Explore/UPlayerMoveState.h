@@ -11,4 +11,6 @@ class SPARTOX_API UUPlayerMoveState : public UUPlayerBaseState
 {
 	GENERATED_BODY()
 
+protected:
+	virtual void TickState(const float DeltaTime) override;
 };

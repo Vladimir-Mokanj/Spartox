@@ -1,36 +1,39 @@
 // Project done by Vladimir Mokanj
 
 #include "UPlayerBaseState.h"
-
-#include "Spartox/Player/APlayerBase.h"
 #include "Kismet/GameplayStatics.h"
-#include "Spartox/Player/Interfaces/IPlayerMove.h"
 
-void UUPlayerBaseState::EnterState(AActor* StateOwner)
+void UUPlayerBaseState::EnterState(AActor* OwnerRef)
 {
-	Super::EnterState(StateOwner);
+	Super::EnterState(OwnerRef);
 
-	if (PlayerRef == nullptr)
+	//Save player ref for later
+	if (!PlayerRef)
 	{
-		PlayerRef = Cast<AAPlayerBase>(PlayerRef);
+		PlayerRef = Cast<AAPlayerBase>(OwnerRef);
 	}
 
-	if (PlayerControllerIfc == nullptr)
+	/*Save the play er controller*/
+	if (!PlayerController)
 	{
-		PlayerControllerIfc = Cast<IIPlayerMove>(UGameplayStatics::GetPlayerController(this, 0));
+		PlayerController = Cast<IIPlayerMove>(UGameplayStatics::GetPlayerController(this, 0));
 	}
+	/*Bind Jump Delegate*/
 
-	if (PlayerControllerIfc != nullptr)
+	if (PlayerController)
 	{
-		PlayerControllerIfc->GetMoveDelegate()->AddUObject(this, &UUPlayerBaseState::ClickMove);
+		PlayerController->GetMoveDelegate()->AddUObject(this, &UUPlayerBaseState::ClickMove);
 	}
 }
 
 void UUPlayerBaseState::ExitState()
 {
-	PlayerControllerIfc->GetMoveDelegate()->RemoveAll(this);
+	Super::ExitState();
+	/*Remove JUmp delegate*/
+	PlayerController->GetMoveDelegate()->RemoveAll(this);
 }
 
 void UUPlayerBaseState::ClickMove()
 {
+
 }

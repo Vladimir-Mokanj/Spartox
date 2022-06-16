@@ -20,6 +20,6 @@ public:
 		FName StateDisplayName;
 
 	virtual void EnterState(AActor* StateOwner);
-	virtual void TickState();
+	virtual void TickState(const float DeltaTime);
 	virtual void ExitState();
 };

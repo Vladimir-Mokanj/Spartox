@@ -5,24 +5,13 @@
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
 
-void UUPlayerIdleState::ClickMove()
+
+void UUPlayerIdleState::EnterState(AActor* StateOwner)
 {
-	// Raycast hit result
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetHitResultUnderCursor(ECC_WorldStatic, true, PlayerRef->HitResult);
-	if (PlayerRef->HitResult.IsValidBlockingHit() == false)
-		return;
+	Super::EnterState(StateOwner);
 
-	// Debug for line trace
-	if (PlayerRef->StateManager->bDebug == true)
-	{
-		const APlayerCameraManager* PlayerCamera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
-
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, PlayerRef->HitResult.ImpactPoint.ToString() + " world location. ", true);
-		DrawDebugLine(GetWorld(), PlayerCamera->GetCameraLocation(), PlayerRef->HitResult.Location, FColor(255, 0, 0), true, -1, 0, 12);
-	}
-
-	if (PlayerRef->HitResult.GetActor()->ActorHasTag("Map") == true)
-		PlayerRef->bIsMoving = true;
+	if (const UAnimationAsset* AnimationIdle = PlayerRef->Animations.FindRef("Idle"); AnimationIdle != nullptr)
+		PlayerRef->GetMesh()->PlayAnimation(PlayerRef->Animations.FindRef("Idle"), true);
 }
 
 void UUPlayerIdleState::TickState(const float DeltaTime)
@@ -33,4 +22,22 @@ void UUPlayerIdleState::TickState(const float DeltaTime)
 	{
 		PlayerRef->StateManager->SwitchStateByKey("Move");
 	}
+}
+
+void UUPlayerIdleState::ClickMove()
+{
+	// Raycast hit result
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetHitResultUnderCursor(ECC_WorldStatic, true, PlayerRef->HitResult);
+	if (PlayerRef->HitResult.IsValidBlockingHit() == false)
+		return;
+
+	// Debug for line trace
+	if (PlayerRef->StateManager->bDebug == true)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, PlayerRef->HitResult.ImpactPoint.ToString() + " world location. ", true);
+		DrawDebugLine(GetWorld(), PlayerRef->HitResult.Location, PlayerRef->HitResult.Location, FColor(255, 0, 0), true, -1, 0, 12);
+	}
+
+	if (PlayerRef->HitResult.GetActor()->ActorHasTag("Map") == true)
+		PlayerRef->bIsMoving = true;
 }

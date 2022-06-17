@@ -14,14 +14,19 @@ class SPARTOX_API AAPlayerBase : public ACharacter
 
 public:
 	// Variables
-	bool bIsMoving = false;
 	FHitResult HitResult;
 
 	// Sets default values for this character's properties
 	AAPlayerBase();
 
+	UPROPERTY(BlueprintReadOnly)
+		bool bIsMoving = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UUStateManagerComponent* StateManager;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TMap<FString, UAnimationAsset*> Animations;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MoveDistanceRange;

@@ -12,7 +12,8 @@ class SPARTOX_API UUPlayerIdleState : public UUPlayerBaseState
 	GENERATED_BODY()
 
 protected:
-	virtual void ClickMove() override;
+	virtual void EnterState(AActor* StateOwner) override;
 	virtual void TickState(const float DeltaTime) override;
+	virtual void ClickMove() override;
 
 };

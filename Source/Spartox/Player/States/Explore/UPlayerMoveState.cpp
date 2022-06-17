@@ -4,6 +4,14 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 
+void UUPlayerMoveState::EnterState(AActor* StateOwner)
+{
+	Super::EnterState(StateOwner);
+
+	if (const UAnimationAsset* AnimationMove = PlayerRef->Animations.FindRef("Move"); AnimationMove != nullptr)
+	PlayerRef->GetMesh()->PlayAnimation(PlayerRef->Animations.FindRef("Move"), true);
+}
+
 void UUPlayerMoveState::TickState(const float DeltaTime)
 {
 	Super::TickState(DeltaTime);

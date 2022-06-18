@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Spartox/Core/States/UStateBase.h"
 #include "Spartox/Player/APlayerBase.h"
-#include "Spartox/Player/Interfaces/IPlayerMove.h"
+#include "Spartox/Player/Interfaces/IPlayerClickInteract.h"
 #include "UPlayerBaseState.generated.h"
 
 
@@ -18,10 +18,10 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 		AAPlayerBase* PlayerRef = nullptr;
 
-	IIPlayerMove* PlayerController = nullptr;
+	IIPlayerClickInteract* PlayerController = nullptr;
 	virtual void EnterState(AActor* OwnerRef) override;
 	virtual void ExitState() override;
 
 protected:
-	virtual void ClickMove();
+	virtual void MouseClick();
 };

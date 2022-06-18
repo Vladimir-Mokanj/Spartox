@@ -13,23 +13,27 @@ class SPARTOX_API AAPlayerBase : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Variables
-	FHitResult HitResult;
-
 	// Sets default values for this character's properties
 	AAPlayerBase();
 
-	UPROPERTY(BlueprintReadOnly)
+	// Variables
+	FHitResult HitResult;
+
+	// This will be moved later.
+	UPROPERTY(VisibleAnywhere)
 		bool bIsMoving = false;
 
+	// This will be moved later.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float MoveDistanceRange;
+
+	// Holds the state manager reference (holds FSM)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UUStateManagerComponent* StateManager;
 
+	// Holds the animation manager reference (holds animations for the object)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TMap<FString, UAnimationAsset*> Animations;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float MoveDistanceRange;
+		class UUAnimationManager* AnimationManager;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -2,13 +2,11 @@
 
 #include "APlayerControllerBase.h"
 
-void AAPlayerControllerBase::PressMove()
+void AAPlayerControllerBase::MouseClick()
 {
-	UE_LOG(LogTemp, Log, TEXT("CLICKED"));
-
-	if (MoveDelegate.IsBound())
+	if (ClickDel.IsBound())
 	{
-		MoveDelegate.Broadcast();
+		ClickDel.Broadcast();
 	}
 }
 
@@ -16,11 +14,11 @@ void AAPlayerControllerBase::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	/*Bind Actions*/
-	InputComponent->BindAction("MouseClick", EInputEvent::IE_Pressed, this, &AAPlayerControllerBase::PressMove);
+	//Bind Actions
+	InputComponent->BindAction("MouseClick", EInputEvent::IE_Pressed, this, &AAPlayerControllerBase::MouseClick);
 }
 
-FMoveSignature* AAPlayerControllerBase::GetMoveDelegate()
+FMoveSignature* AAPlayerControllerBase::GetClickDel()
 {
-	return &MoveDelegate;
+	return &ClickDel;
 }

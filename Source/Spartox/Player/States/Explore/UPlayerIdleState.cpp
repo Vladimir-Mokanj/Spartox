@@ -4,27 +4,24 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
+#include "Spartox/Core/Animation/UAnimationManager.h"
 
 
 void UUPlayerIdleState::EnterState(AActor* StateOwner)
 {
 	Super::EnterState(StateOwner);
 
-	if (const UAnimationAsset* AnimationIdle = PlayerRef->Animations.FindRef("Idle"); AnimationIdle != nullptr)
-		PlayerRef->GetMesh()->PlayAnimation(PlayerRef->Animations.FindRef("Idle"), true);
+	// Check if the animation exists and is not nullptr and play it
+	if (UAnimationAsset* AnimationIdle = PlayerRef->AnimationManager->GetAnimationByKey("Idle"); AnimationIdle != nullptr)
+		PlayerRef->GetMesh()->PlayAnimation(AnimationIdle, true);
 }
 
 void UUPlayerIdleState::TickState(const float DeltaTime)
 {
 	Super::TickState(DeltaTime);
-
-	if (PlayerRef->bIsMoving == true)
-	{
-		PlayerRef->StateManager->SwitchStateByKey("Move");
-	}
 }
 
-void UUPlayerIdleState::ClickMove()
+void UUPlayerIdleState::MouseClick()
 {
 	// Raycast hit result
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetHitResultUnderCursor(ECC_WorldStatic, true, PlayerRef->HitResult);
@@ -39,5 +36,12 @@ void UUPlayerIdleState::ClickMove()
 	}
 
 	if (PlayerRef->HitResult.GetActor()->ActorHasTag("Map") == true)
+	{
 		PlayerRef->bIsMoving = true;
+		PlayerRef->StateManager->SwitchStateByKey("Move");
+	}
+	else if(PlayerRef->HitResult.GetActor()->ActorHasTag("Pickup-able") == true)
+	{
+		PlayerRef->StateManager->SwitchStateByKey("Interact");
+	}
 }

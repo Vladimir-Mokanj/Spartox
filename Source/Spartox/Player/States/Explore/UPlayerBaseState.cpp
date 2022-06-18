@@ -13,27 +13,28 @@ void UUPlayerBaseState::EnterState(AActor* OwnerRef)
 		PlayerRef = Cast<AAPlayerBase>(OwnerRef);
 	}
 
-	/*Save the play er controller*/
+	// Save the Player Controller
 	if (!PlayerController)
 	{
-		PlayerController = Cast<IIPlayerMove>(UGameplayStatics::GetPlayerController(this, 0));
+		PlayerController = Cast<IIPlayerClickInteract>(UGameplayStatics::GetPlayerController(this, 0));
 	}
-	/*Bind Jump Delegate*/
+
 
 	if (PlayerController)
 	{
-		PlayerController->GetMoveDelegate()->AddUObject(this, &UUPlayerBaseState::ClickMove);
+		PlayerController->GetClickDel()->AddUObject(this, &UUPlayerBaseState::MouseClick);
 	}
 }
 
 void UUPlayerBaseState::ExitState()
 {
 	Super::ExitState();
-	/*Remove JUmp delegate*/
-	PlayerController->GetMoveDelegate()->RemoveAll(this);
+
+	// Remove move delegate
+	PlayerController->GetClickDel()->RemoveAll(this);
 }
 
-void UUPlayerBaseState::ClickMove()
+void UUPlayerBaseState::MouseClick()
 {
 
 }

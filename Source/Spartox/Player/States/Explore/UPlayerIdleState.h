@@ -7,13 +7,12 @@
 #include "UPlayerIdleState.generated.h"
 
 UCLASS(Blueprintable)
-class SPARTOX_API UUPlayerIdleState : public UUPlayerBaseState
+class SPARTOX_API UUPlayerIdleState final: public UUPlayerBaseState
 {
 	GENERATED_BODY()
 
 protected:
 	virtual void EnterState(AActor* StateOwner) override;
 	virtual void TickState(const float DeltaTime) override;
-	virtual void ClickMove() override;
-
+	virtual void MouseClick() override;
 };

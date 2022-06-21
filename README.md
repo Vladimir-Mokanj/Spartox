@@ -15,9 +15,15 @@ This is the current roadmap of the project:
    - [x] PlayerBaseState
    - [x] Other states that inherit from player base state
    - [x] Blueprintable version of said states
+- [ ] Inventory System
+   - [ ] Item base class
+   - [ ] Item data-base 
+   - [ ] Blueprintable Item
+   - [ ] Equipable, usable, throwable, destroyable items
 - [ ] Player Components  
    - [x] Movement component
    - [ ] Interact component
+   - [ ] Inventory component
 - [ ] Pathfinding system
    - [ ] Generate nodes
    - [ ] Generate grid

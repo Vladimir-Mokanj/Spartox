@@ -35,4 +35,3 @@ This is the current roadmap of the project:
 * FSM - Finite State Machine that is used to control the state of the player/AI at any point in the game. Every object that has the FSM can only have one active state. This is useful because when there is an error while object is in a certain state it is very easy to debug since every state does only one thing, we can write every behavior of the object in that state (animation to play, sound to play, what to do, etc.) as well as there is no enumerators cluttered all over the palce for the state behavior of the object. Below is the example of the FSM in action. 
 
 https://user-images.githubusercontent.com/79630981/174326130-131d8f13-4be4-427f-ab5c-57570e2e97bb.mp4
-

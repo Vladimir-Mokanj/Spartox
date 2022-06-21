@@ -14,5 +14,10 @@ class SPARTOX_API UUPlayerMoveState final : public UUPlayerBaseState
 protected:
 	virtual void EnterState(AActor* StateOwner) override;
 	virtual void TickState(const float DeltaTime) override;
+
+	// Move state mouse interaction (what happens on mouse click)
 	virtual void MouseClick() override;
+
+private:
+	FVector TargetLocation;
 };

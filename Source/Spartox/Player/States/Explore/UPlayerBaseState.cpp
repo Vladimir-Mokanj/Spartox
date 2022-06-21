@@ -24,6 +24,12 @@ void UUPlayerBaseState::EnterState(AActor* OwnerRef)
 	{
 		PlayerController->GetClickDel()->AddUObject(this, &UUPlayerBaseState::MouseClick);
 	}
+
+	// Check if the animation exists and is not nullptr and play it
+	if (StateAnimation != nullptr)
+	{
+		PlayerRef->GetMesh()->PlayAnimation(StateAnimation, bIsAnimationLooping);
+	}
 }
 
 void UUPlayerBaseState::ExitState()

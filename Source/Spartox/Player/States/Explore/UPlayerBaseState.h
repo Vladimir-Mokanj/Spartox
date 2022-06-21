@@ -15,10 +15,19 @@ class SPARTOX_API UUPlayerBaseState : public UUStateBase
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Player")
 		AAPlayerBase* PlayerRef = nullptr;
 
+	// Animations that is used in certain state
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		UAnimationAsset* StateAnimation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool bIsAnimationLooping;
+
 	IIPlayerClickInteract* PlayerController = nullptr;
+
+	// Functions
 	virtual void EnterState(AActor* OwnerRef) override;
 	virtual void ExitState() override;
 

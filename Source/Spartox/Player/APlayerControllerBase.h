@@ -3,9 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Interfaces/IPlayerMove.h"
 #include "GameFramework/PlayerController.h"
-#include "Interfaces/IPlayerClick.h"
 #include "Interfaces/IPlayerClickInteract.h"
 #include "APlayerControllerBase.generated.h"
 

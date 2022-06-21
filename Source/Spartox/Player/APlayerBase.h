@@ -30,10 +30,6 @@ public:
 	// Holds the state manager reference (holds FSM)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UUStateManagerComponent* StateManager;
-
-	// Holds the animation manager reference (holds animations for the object)
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class UUAnimationManager* AnimationManager;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

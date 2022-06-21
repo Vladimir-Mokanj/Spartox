@@ -18,7 +18,7 @@ void AAPlayerControllerBase::SetupInputComponent()
 	InputComponent->BindAction("MouseClick", EInputEvent::IE_Pressed, this, &AAPlayerControllerBase::MouseClick);
 }
 
-FMoveSignature* AAPlayerControllerBase::GetClickDel()
+FClickSig* AAPlayerControllerBase::GetClickDel()
 {
 	return &ClickDel;
 }

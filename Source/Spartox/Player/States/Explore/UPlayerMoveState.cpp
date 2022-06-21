@@ -4,15 +4,10 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Spartox/Core/Animation/UAnimationManager.h"
 
 void UUPlayerMoveState::EnterState(AActor* StateOwner)
 {
 	Super::EnterState(StateOwner);
-
-	// Check if the animation exists and is not nullptr and play it
-	if (UAnimationAsset* AnimationMove = PlayerRef->AnimationManager->GetAnimationByKey("Move"); AnimationMove != nullptr)
-		PlayerRef->GetMesh()->PlayAnimation(AnimationMove, true);
 
 	// Get hit point of the raycast
 	TargetLocation = PlayerRef->HitResult.ImpactPoint;

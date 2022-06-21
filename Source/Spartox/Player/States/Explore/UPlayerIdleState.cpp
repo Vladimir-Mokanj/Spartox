@@ -4,16 +4,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
-#include "Spartox/Core/Animation/UAnimationManager.h"
-
 
 void UUPlayerIdleState::EnterState(AActor* StateOwner)
 {
 	Super::EnterState(StateOwner);
-
-	// Check if the animation exists and is not nullptr and play it
-	if (UAnimationAsset* AnimationIdle = PlayerRef->AnimationManager->GetAnimationByKey("Idle"); AnimationIdle != nullptr)
-		PlayerRef->GetMesh()->PlayAnimation(AnimationIdle, true);
 }
 
 void UUPlayerIdleState::TickState(const float DeltaTime)

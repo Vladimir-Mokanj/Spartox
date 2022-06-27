@@ -32,7 +32,7 @@ struct FItemStruct : public FTableRowBase
 		TEnumAsByte<EItemRarity> Rarity;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		uint8 Quantity;
+		int32 Quantity;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool bStackable;

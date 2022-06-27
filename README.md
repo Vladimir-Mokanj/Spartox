@@ -16,7 +16,7 @@ This is the current roadmap of the project:
    - [x] Other states that inherit from player base state
    - [x] Blueprintable version of said states
 - [ ] Inventory System
-   - [ ] Item base class
+   - [X] Item base class
    - [ ] Item data-base 
    - [ ] Blueprintable Item
    - [ ] Equipable, usable, throwable, destroyable items
